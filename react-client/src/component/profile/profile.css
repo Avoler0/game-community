@@ -1,0 +1,13 @@
+.profile{
+  padding: 20px;
+  font-size: 14px;
+}
+
+.nickName{
+  font-weight: bold;
+}
+.my-data {
+  display: flex;
+  justify-content: space-between;
+}
+

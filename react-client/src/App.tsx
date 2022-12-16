@@ -1,26 +1,33 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import styled from 'styled-components'
+import { RouterProvider } from 'react-router-dom';
+import Router from './router/router';
+import Menu from './component/menu/menuIndex';
+import './App.css'
+import Header from './component/header/headerIndex';
+import Nav from './component/nav/navIndex';
+import Profile from './component/profile/profileIndex';
+import LeftSearch from './component/search/letftSearch';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+      <div className='commu-wrap'>
+        <Header />
+        <LeftSearch />
+        <Nav />
+        <div className='commut-content'>
+          <article className='content'>
+            <section className='commu-left'>
+              <Profile />
+              <Menu />
+            </section>
+            <section className='commu-right'>
+              <RouterProvider router={Router} />
+            </section>
+          </article>
+        </div>
+      </div>
   );
 }
 
 export default App;
+
