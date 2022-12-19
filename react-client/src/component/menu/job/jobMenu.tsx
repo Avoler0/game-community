@@ -7,7 +7,7 @@ const JobMenu = () =>{
     <ul className='job-menu-list'>
       <li className='menuTitle'>직업 게시판</li>
         {JobList.map((job)=>{
-          return <li className='job-menu-item'>{job}</li>
+          return <li key={job} className='job-menu-item'>{job}</li>
         })}
     </ul>
   )

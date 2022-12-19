@@ -1,0 +1,32 @@
+
+.board-wrap{
+  padding: 10px 0 0 10px;
+}
+table{
+  width: 100%;
+  text-align: center;
+  border-collapse: collapse;
+}
+
+td{
+  display: table-cell;
+  padding: 5px;
+  table-layout: fixed
+}
+.board-head{
+  font-size: 16px;
+  font-weight: 600;
+  height: 30px;
+  border-bottom: 1px solid rgb(0, 0, 0);
+}
+.board-post{
+  width: 100%;
+  font-size: 16px;
+  text-align: center;
+  box-sizing: content-box;
+  border-top: 1px solid rgb(206, 198, 198);
+}
+
+.board-post .title{
+  text-align: left;
+}
