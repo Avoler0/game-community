@@ -4,19 +4,20 @@ import '../menu.css'
 type Props = {
   menuData:any
 }
-type MenuDataList = {
+type ListData = {
   name:string,
-  path:string
+  number:number
 }
 const MenuList = ({menuData}:Props) =>{
-  const {name,path,list} = menuData;
+  const {name,list} = menuData;
+  const commuName = 'isgame' // 후에 게임의 이름으로 대체하여 전역상태로 관리함.
   console.log(menuData)
   return (
     <ul>
       <li className='menuTitle'>{name}</li>
-      {list.map((data:MenuDataList)=> (
+      {list.map((data:ListData)=> (
         <li className='menu-item' key={data.name}>
-          <a href={`/board/${path}/${data.path}`}>{data.name}</a>
+          <a href={`/board/${commuName}/${data.number}`}>{data.name}</a>
         </li>
       ))}
     </ul>

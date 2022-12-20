@@ -2,7 +2,11 @@
 type Props = {
   title:string
 }
-
+type boardListData = {
+  title:string,
+  id:number,
+  category:string
+}
 const BoardList = ({title}:Props) => {
   const category = '자유'
   return (
