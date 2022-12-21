@@ -1,0 +1,12 @@
+.commu-right {
+  width: 250px;
+  height: 1000px;
+  background-color: black;
+}
+
+.ad-right1{
+  width: 100%;
+  height: 250px;
+  margin-bottom: -250px;
+  background-color: white;
+}

@@ -6,12 +6,12 @@ a{
   width: 100%;
   border-bottom: none;
   color: black;
+  font-size: 15px;
+  text-align: left;
 }
 .menuTitle {
-  font-size: 18px;
   font-weight: bold;
-  text-align: center;
-  padding: 5px;
+  padding: 10px;
   border-top: 2px solid red;
 }
 .job-menu-list{
@@ -21,7 +21,6 @@ a{
 .job-menu-item {
   padding: 5px;
   border-top: 1px solid rgb(206, 198, 198);
-  
 }
 
 .menu-item {

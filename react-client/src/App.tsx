@@ -1,30 +1,28 @@
-import styled from 'styled-components'
 import { RouterProvider } from 'react-router-dom';
 import Router from './router/router';
-import Menu from './component/menu/menuIndex';
 import './App.css'
 import Header from './component/header/headerIndex';
 import Nav from './component/nav/navIndex';
-import Profile from './component/profile/profileIndex';
 import LeftSearch from './component/search/letftSearch';
+import CommuLeft from './component/commuLeft/commuLeft';
+import CommuCenter from './component/commuCenter/commuCenter';
+import CommuRight from './component/commuRight/commuRight';
 
 function App() {
   return (
       <div className='commu-wrap'>
-        <Header />
-        <LeftSearch />
-        <Nav />
-        <div className='commut-content'>
+        <div className='commu-content'>
+          <Header />
+          <LeftSearch />
+          <Nav />
           <article className='content'>
-            <section className='commu-left'>
-              <Profile />
-              <Menu />
-            </section>
-            <section className='commu-right'>
+            <CommuLeft />
+            <CommuCenter>
               <RouterProvider router={Router} />
-            </section>
+            </CommuCenter>
           </article>
         </div>
+        <CommuRight />
       </div>
   );
 }

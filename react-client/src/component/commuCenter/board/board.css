@@ -6,6 +6,7 @@ table{
   width: 100%;
   text-align: center;
   border-collapse: collapse;
+  font-size: 15px;
 }
 
 td{
@@ -14,14 +15,11 @@ td{
   table-layout: fixed
 }
 .board-head{
-  font-size: 16px;
-  font-weight: 600;
   height: 30px;
   border-bottom: 1px solid rgb(0, 0, 0);
 }
 .board-post{
   width: 100%;
-  font-size: 16px;
   text-align: center;
   box-sizing: content-box;
   border-top: 1px solid rgb(206, 198, 198);

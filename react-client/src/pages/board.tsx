@@ -1,4 +1,4 @@
-import Board from "../component/board/boardIndex";
+import Board from "../component/commuCenter/board/boardIndex";
 
 
 

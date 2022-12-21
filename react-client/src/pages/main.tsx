@@ -1,4 +1,4 @@
-import Main from "../component/main/mainIndex";
+import Main from "../component/commuCenter/main/mainIndex";
 
 
 const MainPage = () => {
