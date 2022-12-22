@@ -1,14 +1,8 @@
 import express from 'express';
-import path from 'path';
+import { postsController } from '../controllers/posts';
 
 const apiRouter = express();
 
-
-
-// apiRouter.use(express.static(path.join(__dirname, '../react_client/build/')));
-
-apiRouter.get('/s', (req,res) => {
-  res.json({data:'하이'})
-})
+apiRouter.get('/posts/:commuName/:boardNumber', postsController)
 
 export default apiRouter;
