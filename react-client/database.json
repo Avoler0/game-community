@@ -1,21 +1,4 @@
 {
-  "posts": [
-    {
-      "id": 1,
-      "title": "json-server",
-      "author": "typicode"
-    }
-  ],
-  "comments": [
-    {
-      "id": 1,
-      "body": "some comment",
-      "postId": 1
-    }
-  ],
-  "profile": {
-    "name": "typicode"
-  },
   "menulist": [
     {
       "name":"직업 게시판",
@@ -52,5 +35,18 @@
         { "name":"버그 게시판", "number":10 }
       ]
     }
-  ]
+  ],
+  "posts":{
+    "0":[
+      {
+        "id":0,
+        "title":"제목없음",
+        "content": "내용없음",
+        "user": "닉네임 없음",
+        "date": "2022-12-21",
+        "view": "730",
+        "reco": "20"
+      }
+    ]
+  }
 }

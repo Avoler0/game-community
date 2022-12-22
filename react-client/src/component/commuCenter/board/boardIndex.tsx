@@ -1,38 +1,38 @@
-import BoardList from "./list/boardList";
+import BoardList from "./post/postsList";
 import './board.css'
 import { useMatches } from "react-router-dom";
-type BoardData = {
-  boardNumber:[
-    id:number, // 글 넘버
-    title: string, // 제목
-    content: string, // 내용
-    user:string, // 글쓴이 [유저]
-    date:Date, // 글쓴 시간
-    view:number, // 조회 수
-    reco:number // 추천 수
-  ]
-}
+import { useEffect, useState } from "react";
+import { getDB } from "../../../hooks/ServerDbHook";
+import axios from "axios";
+
 const Board = () => {
+  const [postsList,setPostsList] = useState<any>();
   const BoardHead = ["번호","제목","글쓴이","등록일","조회","추천"]
-  const sslist = new Array(30).fill('제목 없음');
-  console.log(sslist)
-  const List = ["제목1","제목2","안녕하세요","가나다라마바사","제목입니다.","게시판을 이용하자"]
   const commuName = 'isgame' // 후에 게임의 이름으로 대체하여 전역상태로 관리함.
   const matches = useMatches();
   const boardNumber = matches[0].params.boardNumber
 
-  const boardList = [
-    {
-      boardNumber:matches[0].params.boardNumber,
-      number:0,
-      title: '제목 부분입니다.',
-      content: '내용 부분입니다.',
-      user:'유저',
-      date:'2022-12-20',
-      view: 723, // 조회 수
-      reco:100 // 추천 수
-    }
-  ]
+  const emptyPosts = [
+      {
+        "id":0,
+        "title":"제목없음",
+        "content": "내용없음",
+        "user": "닉네임 없음",
+        "date": "2022-12-21",
+        "view": "730",
+        "reco": "20"
+      }
+    ]
+  useEffect(()=>{
+    getDB.postsList(commuName,boardNumber!)
+    .then((result)=>{
+      setPostsList(result)
+    })
+    .catch((error)=>{
+      console.log("에러남")
+    })
+  },[])
+  if(!postsList) return <div></div>
   return (
     <article className="board-wrap">
       <table>
@@ -44,8 +44,8 @@ const Board = () => {
           </tr>
         </thead>
         <tbody>
-          {sslist.map((name)=>(
-              <BoardList key={name} title={name} />
+          {emptyPosts && emptyPosts?.map((data:any)=>(
+              <BoardList key={data.id} postsData={data} />
           ))}
         </tbody>
       </table>

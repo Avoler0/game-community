@@ -2,7 +2,7 @@
 
 import axios from 'axios'
 
-const dbURL = 'http://localhost:4000'
+const dbURL = 'http://localhost:4000/api'
 
 
 const ServerAxios = axios.create({
