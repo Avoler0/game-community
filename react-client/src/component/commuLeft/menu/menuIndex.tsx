@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
 import { getDB } from '../../../hooks/ServerDbHook';
-import JobMenu from './job/jobMenu';
 import MenuList from './list/menuList';
 import './menu.css'
 
@@ -15,7 +14,7 @@ type boardMenuList = {
 
 const Menu = () => {
   const commuName = 'isgame'
-  const [menulist,setMenulist] = useState<any>();
+  const [menulist,setMenulist] = useState<boardMenuList[] | []>([]);
 
   useEffect(()=>{
     getDB.menulist(commuName)
