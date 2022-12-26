@@ -6,7 +6,7 @@ export const getDB = {
     const result = await ServerAxios({
       method:'get',
       // url:`/${commuName}/menulist`
-      url:`/menulist`
+      url:`/menulist/${commuName}`
     })
     return result.data;
   },

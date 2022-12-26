@@ -17,13 +17,13 @@ const Menu = () => {
   const commuName = 'isgame'
   const [menulist,setMenulist] = useState<any>();
 
-  // useEffect(()=>{
-  //   getDB.menulist(commuName)
-  //   .then((result)=>{
-  //     console.log(result)
-  //     setMenulist(result)
-  //   })
-  // },[])
+  useEffect(()=>{
+    getDB.menulist(commuName)
+    .then((result)=>{
+      console.log("메뉴리스트",result)
+      setMenulist(result)
+    })
+  },[])
   const emptyMenuList = [
     {
       "name":"직업 게시판",
