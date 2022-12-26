@@ -10,7 +10,7 @@ export const postsController = async (req:any,res:any) => {
         "title":"제목없음",
         "content": "내용없음",
         "user": "닉네임 없음",
-        "date": "2022-12-21",
+        "date": "12-21",
         "view": "730",
         "reco": "20"
       }
