@@ -11,7 +11,7 @@ terminal -> npm run server
 
 ## communities
 <li style="color:#f03c15; font-weight:strong;">CommunityID</li>
-<li style="color:#f03c15;">MenuID</li>
+<li style="color:#f03c15">MenuID</li>
 <li style="color:orange;">PostID</li>
 <li style="color:orange;">Title</li> 
 <li style="color:orange;">BackGroundImg</li> 
