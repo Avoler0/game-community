@@ -11,10 +11,10 @@ terminal -> npm run server
 
 ## communities
 <li style="color:red; font-weight:strong;">CommunityID</li>
-<li style="color:orange">MenuID</li>
-<li style="color:orange">PostID</li>
-<li style="color:orange">Title</li> 
-<li style="color:orange">BackGroundImg</li> 
+<li style="color:orange;">MenuID</li>
+<li style="color:orange;">PostID</li>
+<li style="color:orange;">Title</li> 
+<li style="color:orange;">BackGroundImg</li> 
 
 ## menucategory
 <li color="red">CommunityID</li>
