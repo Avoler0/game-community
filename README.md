@@ -7,7 +7,7 @@ terminal -> npm run server
 
 
 
-# DataBase
+# DataBase Table
 
 ## users
 <li>UserID</li>
