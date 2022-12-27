@@ -1,5 +1,5 @@
 # game-community
-
+<span style="color:red">CommunityID</li>
 react-client
 terminal -> npm run dev
 express-server
