@@ -17,9 +17,9 @@ terminal -> npm run server
 <li style="color:orange">BackGroundImg</li> 
 
 ## menucategory
-<span style="color:red">- CommunityID</span>
-<span style="color:orange">- MenuCategoryID</span>
-- MenuCategoryName
+<li color="red">CommunityID</li>
+<li style="color:orange">MenuCategoryID</li>
+<li style="color:orange">MenuCategoryName</li>
 
 ## menulist
 <span style="color:red">- CommunityID</span>
