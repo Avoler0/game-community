@@ -10,7 +10,7 @@ terminal -> npm run server
 # DataBase
 
 ## communities
-<li style="color:red; font-weight:strong;">CommunityID</li>
+<li style="color:#f03c15; font-weight:strong;">CommunityID</li>
 <li style="color:orange;">MenuID</li>
 <li style="color:orange;">PostID</li>
 <li style="color:orange;">Title</li> 
