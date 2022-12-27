@@ -1,5 +1,5 @@
 # game-community
-<span style="color:red">CommunityID</li>
+
 react-client
 terminal -> npm run dev
 express-server
@@ -10,7 +10,7 @@ terminal -> npm run server
 # DataBase
 
 ## communities
-<li style="color:red">CommunityID</li>
+<li style="color:red,font-weight:strong">CommunityID</li>
 <li style="color:orange">MenuID</li>
 <li style="color:orange">PostID</li>
 <li style="color:orange">Title</li> 
