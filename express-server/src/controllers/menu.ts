@@ -1,14 +1,11 @@
 import db from '../mariadb/mariadb';
 
 
-export const menuController = async (req:any,res:any) => {
-  console.log("포스트 컨트롤러" ,req.params)
+export const getMenulist = async (req:any,res:any) => {
+  console.log("포스트 컨트롤러" ,req.method)
   const conn = await db();
   const users = await conn?.query(`SELECT * FROM users`)
-  console.log("쿼리 유저!!",users)
-  try{
-    
-    const emptyMenuList = [
+  const emptyMenuList = [
     {
       "name":"직업 게시판",
       "list":[
@@ -45,12 +42,18 @@ export const menuController = async (req:any,res:any) => {
       ]
     }
   ]
+    try{
+      // console.log("쿼리 유저!!",users)
+      res.status(200).json(emptyMenuList);
+    }catch(err){
+      res.status(400).json({message:'api 조회에 실패하였습니다.'})
+    }finally{
+      return ;
+    }
+  
+}
 
-    res.status(200).json(emptyMenuList);
-  }catch(err){
-    
-    res.status(400).json({message:'api 조회에 실패하였습니다.'})
-  }finally{
-    return ;
-  }
+export const postMenulist = async (req:any,res:any) => {
+  console.log("포스트 받음",req.body)
+
 }
