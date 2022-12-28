@@ -1,9 +1,13 @@
-
+import db from '../mariadb/mariadb';
 
 
 export const menuController = async (req:any,res:any) => {
   console.log("포스트 컨트롤러" ,req.params)
+  const conn = await db();
+  const users = await conn?.query(`SELECT * FROM users`)
+  console.log("쿼리 유저!!",users)
   try{
+    
     const emptyMenuList = [
     {
       "name":"직업 게시판",
