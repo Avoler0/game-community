@@ -4,7 +4,7 @@ import db from '../mariadb/mariadb';
 export const getMenulist = async (req:any,res:any) => {
   console.log("포스트 컨트롤러" ,req.method)
   const conn = await db();
-  const users = await conn?.query(`SELECT * FROM users`)
+  const users = await conn?.query(`SELECT * FROM menulist`)
   const emptyMenuList = [
     {
       "name":"직업 게시판",
@@ -43,6 +43,7 @@ export const getMenulist = async (req:any,res:any) => {
     }
   ]
     try{
+      
       // console.log("쿼리 유저!!",users)
       res.status(200).json(emptyMenuList);
     }catch(err){
@@ -54,6 +55,18 @@ export const getMenulist = async (req:any,res:any) => {
 }
 
 export const postMenulist = async (req:any,res:any) => {
-  console.log("포스트 받음",req.body)
+  console.log("포스트 받음",req.params,req.body)
+  const { communityID, categoryName } = req.body
+  const conn = await db();
 
+  try{
+    await conn?.query(`INSERT INTO menucategory(CommunityID,MenuCategoryName) VALUES(?,?)`,[communityID, categoryName])
+    const result =  await conn?.query('SELECT * FROM menucategory')
+
+    return res.status(200).json(result)
+  }catch(err){
+    console.log("에러남",err)
+    return res.status(400).json(err)
+  }
+  
 }
