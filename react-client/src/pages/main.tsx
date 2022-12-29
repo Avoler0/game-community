@@ -1,5 +1,5 @@
 import Main from "../component/commuCenter/main/mainIndex";
-import MainLayout from "./layout/mainLayout";
+import MainLayout from "./layout/main/mainLayout";
 
 
 const MainPage = () => {

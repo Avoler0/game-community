@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { getDB } from '../../../hooks/ServerDbHook';
+import { getDB, postDB } from '../../../hooks/ServerDbHook';
 import MenuList from './list/menuList';
 import './menu.css'
 
@@ -22,7 +22,9 @@ const Menu = () => {
       console.log("메뉴리스트",result)
       setMenulist(result)
     })
+    
   },[])
+  
   const emptyMenuList = [
     {
       "name":"직업 게시판",

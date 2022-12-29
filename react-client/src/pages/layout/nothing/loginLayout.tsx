@@ -1,4 +1,4 @@
-
+import '../layout.css'
 
 
 const LoginLayout = () => {

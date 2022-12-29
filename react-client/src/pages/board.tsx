@@ -1,5 +1,5 @@
 import Board from "../component/commuCenter/board/boardIndex";
-import MainLayout from "./layout/mainLayout";
+import MainLayout from "./layout/main/mainLayout";
 
 
 
