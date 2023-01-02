@@ -10,7 +10,7 @@ const Router = createBrowserRouter(
   createRoutesFromElements(
     <>
       <Route path="/" element={<MainPage />} />
-      <Route path="/admin" element={<Admin />} >
+      <Route path="/:commuName/admin" element={<Admin />} >
         <Route path="menu" element={<AdminMenuSetting />} />
       </Route>
       <Route path="/board/:category/:boardNumber" element={<BoardPage />} />

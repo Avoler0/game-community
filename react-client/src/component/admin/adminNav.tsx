@@ -16,7 +16,7 @@ const AdminNav = () => {
       <ul>
         <li className='nav-category'>
           <Link to={'menu'}>
-            <span>카테고리 추가</span>
+            <span>설정</span>
           </Link>
         </li>
         <li className='nav-category' onClick={() => onClick('menu_list')}>메뉴 추가</li>

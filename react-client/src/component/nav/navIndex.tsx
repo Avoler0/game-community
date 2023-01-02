@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import { useMatches, useRoutes } from 'react-router-dom';
 import { postDB } from '../../hooks/ServerDbHook'
-import AdminNav from '../admin/nav';
+import AdminNav from '../admin/adminNav';
 import './nav.css'
 
 

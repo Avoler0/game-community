@@ -4,8 +4,9 @@ import LeftSearch from "../component/search/letftSearch";
 import Nav from "../component/nav/navIndex";
 import CommuCenter from "../component/commuCenter/commuCenter";
 import CommuRight from "../component/commuRight/commuRight";
-import AdminNav from '../component/admin/nav';
+import AdminNav from '../component/admin/adminNav';
 import { Outlet } from 'react-router-dom';
+import AdminMenu from '../component/admin/adminMenu';
 
 const Admin = () => {
   const admin = true
@@ -21,6 +22,7 @@ const Admin = () => {
         <LeftSearch />
         <AdminNav />
         <article className='content'>
+          <AdminMenu />
           <CommuCenter>
             <Outlet />
           </CommuCenter>

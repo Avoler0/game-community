@@ -1,0 +1,37 @@
+
+.admin-category-heading{
+  margin: 0 auto;
+  text-align: center;
+  padding: 5px;
+}
+.category-area{
+  width: 300px;
+}
+.category-list{
+  padding: 1px;
+  border: 1px solid #969694;
+}
+.category-list .tree{
+  border: 1px solid #6f6f65;
+}
+.category-list ul{
+  height: 600px;
+}
+
+.tree .node{
+  padding: 3px 0 1px 11px;
+}
+.tree .node.add {
+  font-size: 12px;
+}
+.tree-category .node span {
+  font-weight: bold;
+}
+.category-part-line span{
+  display: block;
+  width: 95%;
+  height: 1px;
+  border-bottom: 1px dashed gray;
+  margin: 5px auto;
+}
+

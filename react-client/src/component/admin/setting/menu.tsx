@@ -1,5 +1,5 @@
 import { useState } from 'react';
-
+import './menu.css'
 
 const AdminMenuSetting = () => {
   const [selectCategory,setSelectCategory] = useState(null);
@@ -26,18 +26,62 @@ const AdminMenuSetting = () => {
     setSelectCategory(e.target.value)
   }
   return (
-    <div>
-      <select name='menu_category' onChange={onChange}>
-        {category.map((data)=>{
-          return <option key={data} value={data}>{data}</option>
-        })}
-      </select>
-      <div>
-        {menulist.map((data)=>{
-          if(data.category === selectCategory){
-            return <div>{data.name}</div>
-          }
-        })}
+    <div className='admin-wrap'>
+      <div className='category-area'>
+        <div className='admin-category-heading'>카테고리 목록</div>
+        <div className='category-list'>
+          <div className='tree'>
+            <ul>
+              <li className='tree-category'>
+                <div className='node'>
+                  <span>정보 게시판</span>
+                </div>
+              </li>
+              <li className='tree-child'>
+                <div className='node'>
+                  <span>ㄴ </span>
+                  <span>게임 뉴스</span>
+                </div>
+              </li>
+              <li className='tree-child'>
+                <div className='node'>
+                  <span>ㄴ </span>
+                  <span>게임 뉴스</span>
+                </div>
+              </li>
+              <li className='tree-child last-child'>
+                <div className='node add'>
+                  <span>+ 메뉴 추가하기</span>
+                </div>
+              </li>
+              <div className='category-part-line' >
+                <span></span>
+              </div>
+              <li className='tree-category'>
+                <div className='node'>
+                  <span>정보 게시판</span>
+                </div>
+              </li>
+              <li className='tree-child'>
+                <div className='node'>
+                  <span>ㄴ </span>
+                  <span>게임 뉴스</span>
+                </div>
+              </li>
+              <li className='tree-child'>
+                <div className='node'>
+                  <span>ㄴ </span>
+                  <span>게임 정보</span>
+                </div>
+              </li>
+              <li className='tree-child'>
+                <div className='node add'>
+                  <span>+ 메뉴 추가하기</span>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </div>
       </div>
     </div>
   )
