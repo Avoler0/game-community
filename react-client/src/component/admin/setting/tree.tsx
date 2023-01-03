@@ -2,20 +2,22 @@ import { useRef, useState } from "react";
 
 
 
-const MenuTree = ({category,list,menuList}:any) => {
+const MenuTree = ({menuData,index,setMenuList}:any) => {
+  const {category,list} = menuData;
   const [addNode,setAddNode] = useState(false);
   const addNodeRef = useRef<HTMLInputElement>(null);
-  console.log("메뉴트리",category,list)
-  function addNodeClose(){
-    setAddNode(false)
-  }
+  // console.log("메뉴트리",menuData,index)
+
   function childClick(event:any){
     event.currentTarget.classList.toggle('active');
   }
+
   function menuAdd(event:any){
     event.preventDefault()
     if(addNodeRef){
-      console.log(addNodeRef.current?.value)
+      list.push(addNodeRef.current?.value)
+      setAddNode(false)
+      setMenuList({category,list,index})
     }
   }
   return(
@@ -26,7 +28,7 @@ const MenuTree = ({category,list,menuList}:any) => {
         </div>
       </li>
       {list.map((name:string)=>(
-        <li className='tree-child' onClick={childClick}>
+        <li key={category+' '+name} className='tree-child' onClick={childClick}>
           <div className='node'>
             <span>ㄴ </span>
             <span>{name}</span>
@@ -40,7 +42,7 @@ const MenuTree = ({category,list,menuList}:any) => {
         <div className='node'>
           {addNode ? (
           <label>
-            <span className='input-wrap'><input type='text' ref={addNodeRef}/><span onClick={addNodeClose}>X</span></span>
+            <span className='input-wrap'><input type='text' ref={addNodeRef}/><span onClick={() => setAddNode(false)}>X</span></span>
             <button className='node-addBtn' onClick={menuAdd}>추가</button>
           </label>)
             : <span onClick={()=> setAddNode(true)}>+ 메뉴 추가하기</span>}

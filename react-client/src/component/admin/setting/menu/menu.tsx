@@ -7,7 +7,6 @@ type List = {
   name:string
 }
 const AdminMenuSetting = () => {
-  const [addNode,setAddNode] = useState(false);
   const [menuList,setMenuList] = useState<any>();
   const [selectCategory,setSelectCategory] = useState(null);
   const list:List[] = [
@@ -37,6 +36,7 @@ const AdminMenuSetting = () => {
     },
   ]
   useEffect(()=>{
+    const realResult = [];
     const result = list?.reduce((accumulator:any, currentValue:any)=>{
       if(accumulator[currentValue.category]){
         accumulator[currentValue.category] = [...accumulator[currentValue.category], currentValue.name]
@@ -45,10 +45,19 @@ const AdminMenuSetting = () => {
       }
       return accumulator
     },[])
-    setMenuList(result);
+    for(const ee in result){
+      realResult.push({category:ee,list:result[ee]});
+    }
+    console.log("리얼!!",realResult)
+    setMenuList(realResult);
   },[])
   console.log(menuList)
-
+  function childSetMenuList(data:any){
+    console.log("자식에서 온 데이터",data)
+    const temp = menuList;
+    temp[data.index].list = data.list;
+    setMenuList(temp)
+  }
   function tempClick(){
     const category1 = '커뮤니티 게시판'
     const menu1 = ['자유 게시판','아무 게시판','삭제된 게시판입니다.']
@@ -61,16 +70,18 @@ const AdminMenuSetting = () => {
     console.log("템프",temp)
     setMenuList(temp)
   }
+  function tempClick2(){
 
+    console.log("클릭투!",menuList)
+  }
   useEffect(()=>{
-    console.log("메뉴리스트입니다.",menuList)
+    console.log("메뉴리스트입니다1.",menuList)
   },[menuList])
-  function treeRender(list:any){
+  function treeRender(){
     const result = [];
-    if(list){
-      for(const ee in list!){
-        console.log("dfdf",ee)
-        result.push(<MenuTree category={ee} list={list[ee]} menuList={list}></MenuTree>)
+    if(menuList){
+      for(const category in menuList!){
+        result.push(<MenuTree menuData={menuList[category]} setMenuList={childSetMenuList}></MenuTree>)
       }
     }
 
@@ -81,11 +92,14 @@ const AdminMenuSetting = () => {
       <div className='category-area'>
         <div className='admin-category-heading'>카테고리 목록</div>
         <button onClick={tempClick}>저장</button>
-        <button>삭제</button>
+        <button onClick={tempClick2}>삭제</button>
         <div className='category-list'>
           <div className='tree'>
             <ul>
-              {treeRender(menuList)}
+              {menuList && menuList?.map((data:any,index:number)=>{
+                return <MenuTree key={data.category} menuData={data} index={index} setMenuList={childSetMenuList}/>
+              })}
+              {/* {treeRender()} */}
             </ul>
           </div>
         </div>
