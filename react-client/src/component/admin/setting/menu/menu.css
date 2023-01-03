@@ -1,0 +1,78 @@
+
+.admin-category-heading{
+  margin: 0 auto;
+  text-align: center;
+  padding: 5px;
+}
+.category-area{
+  width: 300px;
+}
+.category-list{
+  padding: 1px;
+  border: 1px solid #969694;
+}
+.category-list .tree{
+  border: 1px solid #6f6f65;
+  height: 600px;
+}
+
+.tree .node{
+  padding: 3px 0 1px 11px;
+}
+.tree-child.active {
+  background-color: gray;
+}
+.tree-add-child .node {
+  font-size: 12px;
+}
+.tree-child .node .image-wrap{
+  padding: 0 5px;
+}
+.tree-child .node .image-wrap img{
+  width: 12px;
+  height: 12px;
+}
+.tree-add-child .node span{
+  cursor: pointer;
+}
+.tree-add-child .node label .input-wrap{
+  border: 1px solid black;
+  padding: 2px;
+}
+
+.tree-add-child .node input {
+  width: 150px;
+  border: none;
+}
+.tree-add-child .node input:focus {
+  outline: none;
+}
+.tree-category{
+  height: auto;
+}
+.tree-category .node-category span {
+  font-weight: bold;
+}
+
+.category-part-line span{
+  display: block;
+  width: 95%;
+  height: 1px;
+  border-bottom: 1px dashed gray;
+  margin: 5px auto;
+}
+
+.node-addBtn{
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+}
+
+.node-addBtn:hover {
+  color: blue;
+}
+
+.node.category-add span{
+  font-size: 14px;
+  font-weight: bold;
+}
