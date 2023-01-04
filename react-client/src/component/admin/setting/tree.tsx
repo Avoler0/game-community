@@ -2,11 +2,14 @@ import { useRef, useState } from "react";
 
 
 
-const MenuTree = ({menuData,index,setMenuList}:any) => {
+const MenuTree = ({menuData,setMenuList}:any) => {
   const {category,list} = menuData;
   const [addNode,setAddNode] = useState(false);
   const addNodeRef = useRef<HTMLInputElement>(null);
   // console.log("메뉴트리",menuData,index)
+  function menuEdit(event:any){
+
+  }
 
   function childClick(event:any){
     event.currentTarget.classList.toggle('active');
@@ -14,10 +17,16 @@ const MenuTree = ({menuData,index,setMenuList}:any) => {
 
   function menuAdd(event:any){
     event.preventDefault()
+    const lustDupliCheck = list.includes(addNodeRef.current?.value);
     if(addNodeRef){
-      list.push(addNodeRef.current?.value)
-      setAddNode(false)
-      setMenuList({category,list,index})
+      if(lustDupliCheck){
+        setAddNode(false)
+      }else{
+        const value = addNodeRef.current?.value
+        list.push(value)
+        setAddNode(false)
+        setMenuList({category,list:[value]})
+      }
     }
   }
   return(
