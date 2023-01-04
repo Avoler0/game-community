@@ -1,4 +1,5 @@
 import db from '../mariadb/mariadb';
+import { getMariaDBCommunity } from '../mariadb/query';
 
 
 export const getMenulist = async (req:any,res:any) => {
@@ -55,20 +56,41 @@ export const getMenulist = async (req:any,res:any) => {
 }
 
 export const postMenulist = async (req:any,res:any) => {
-  console.log("포스트 받음",req.params,req.body)
-  const {CommunityName, MenuCategoryName, MenuID, MenuName} = req.body
   const conn = await db();
-  // const insertReady = await conn?.query(`INSERT INTO menucategory(CommunityID,MenuCategoryName) VALUES(?,?)`,[1, '테스트'])
-  // const postresult = await conn?.query(`INSERT INTO menulist(CommunityID,MenuCategoryID,MenuName) VALUES(?,?,?)`,[CommunityID, MenuCategoryID, MenuName])
-  // console.log("포스트 리설트",postresult)
+  const {commuName} = req.params;
+  const communityID = await getMariaDBCommunity.id(commuName);
+  // console.log("포스트 받음",req.params,req.body)
+  console.log("포스트 받음",communityID)
+  // const { category, list } = req.body
+  const body = req.body
+  body.forEach(async (element:any) => {
+    try{
+      let insertValue = '';
+      const query = `SELECT MenuCategoryID, MenuCategoryName FROM menucategory WHERE CommunityID = ${communityID} and MenuCategoryName = '${element.category}';`
+      const menucategoryQuery = await conn?.query(query);
+      const categoryID = menucategoryQuery[0]['MenuCategoryID']
+      
+      element.list.forEach(async (name:string,index:number)=>{
+        if(index === element.list.length - 1) insertValue += `(${communityID},${categoryID},'${name}')`
+        else insertValue += `(${communityID},${categoryID},'${name}'),`
 
-  // const result =  await conn?.query('SELECT * FROM menucategory')
+        // await conn?.query(`INSERT INTO menulist(CommunityID,MenuCategoryID,MenuName) VALUES(${communityID},${categoryID},'${name}');`)
+      })
+
+      console.log(`INSERT INTO menulist(CommunityID,MenuCategoryID,MenuName) VALUES${insertValue}`)
+      const insertResult = await conn?.query(`INSERT INTO menulist(CommunityID,MenuCategoryID,MenuName) VALUES${insertValue};`)
+
+    }catch(err){
+      console.log('에러났음')
+    }
+
+  });
   try{
     const result = await conn?.query(`SELECT * FROM menucategory c LEFT JOIN menulist m ON c.MenuCategoryID = m.MenuCategoryID`)
-    console.log("리설트",result)
+    // console.log("리설트",result)
     return res.status(200).json(result)
   }catch(err){
-    console.log("에러남",err)
+    // console.log("에러남",err)
     return res.status(400).json(err)
   }
   
