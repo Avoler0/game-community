@@ -2,10 +2,10 @@ import { useRef, useState } from "react";
 
 
 
-const MenuTree = ({menuData,setMenuList}:any) => {
+const MenuTree = ({menuData,setTreeAddList}:any) => {
   const {category,list} = menuData;
   const [addNode,setAddNode] = useState(false);
-  const addNodeRef = useRef<HTMLInputElement>(null);
+  const addMenuRef = useRef<HTMLInputElement>(null);
   // console.log("메뉴트리",menuData,index)
   function menuEdit(event:any){
 
@@ -17,15 +17,15 @@ const MenuTree = ({menuData,setMenuList}:any) => {
 
   function menuAdd(event:any){
     event.preventDefault()
-    const lustDupliCheck = list.includes(addNodeRef.current?.value);
-    if(addNodeRef){
+    const lustDupliCheck = list.includes(addMenuRef.current?.value);
+    if(addMenuRef){
       if(lustDupliCheck){
         setAddNode(false)
       }else{
-        const value = addNodeRef.current?.value
+        const value = addMenuRef.current?.value
         list.push(value)
+        setTreeAddList({category,list:[value]})
         setAddNode(false)
-        setMenuList({category,list:[value]})
       }
     }
   }
@@ -47,14 +47,16 @@ const MenuTree = ({menuData,setMenuList}:any) => {
           </div>
         </li>
       ))}
-      <li className='tree-add-child'>
+      <li className='tree-child'>
         <div className='node'>
-          {addNode ? (
-          <label>
-            <span className='input-wrap'><input type='text' ref={addNodeRef}/><span onClick={() => setAddNode(false)}>X</span></span>
-            <button className='node-addBtn' onClick={menuAdd}>추가</button>
-          </label>)
-            : <span onClick={()=> setAddNode(true)}>+ 메뉴 추가하기</span>}
+          <div className='tree-add-node'>
+            {addNode ? (
+              <label>
+                <span className='input-wrap'><input type='text' ref={addMenuRef}/><span onClick={() => setAddNode(false)}>X</span></span>
+                <button className='node-addBtn' onClick={menuAdd}>추가</button>
+              </label>)
+                : <span onClick={()=> setAddNode(true)}>+ 메뉴 추가하기</span>}
+          </div>
         </div>
       </li>
       <div className='category-part-line' >

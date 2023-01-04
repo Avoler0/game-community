@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { postDB } from '../../../../hooks/ServerDbHook';
 import MenuTree from '../tree';
 import './menu.css'
@@ -10,7 +10,8 @@ type List = {
 const AdminMenuSetting = () => {
   const [menuList,setMenuList] = useState<any>();
   const [childAddMenuList,setChildAddMenuList] = useState<any>([]);
-  const [selectCategory,setSelectCategory] = useState(null);
+  const addCategoryRef = useRef<HTMLInputElement>(null);
+  const [addCategoryNode,setAddCategoryNode] = useState(false);
   const list:List[] = [
     {
       category:'직업 게시판',
@@ -54,9 +55,8 @@ const AdminMenuSetting = () => {
     setMenuList(result);
   },[])
 
-  function childSetMenuList(data:any){
+  function treeSetMenuList(data:any){
     const duplication = childAddMenuList.some((obj:any) => obj.category === data.category);
-    
     if(duplication){
       const duplicateArrIndex = childAddMenuList.findIndex((obj:any)=> obj.category === data.category)
       const newChildAddMenuList = childAddMenuList.map((obj:any,mapIndex:number)=>{
@@ -72,32 +72,40 @@ const AdminMenuSetting = () => {
     }else{
       setChildAddMenuList([...childAddMenuList,data])
     }
-    // console.log("템프 1",temp1)
-    // const temp2 = temp1.map((menu:any)=>{
-    //   if(menu.category === data.category){
-    //     console.log('중복!!!')
-    //     const list = Object.assign([],menu.list);
-    //     list.push(data.value)
-    //     return list
-    //   }
-    // })
-    // console.log("템프 2",temp2)
-    
-    // temp[data.index].list = data.list;
-    // setMenuList(temp)
+  }
+  function treeSetCategory(){
+    const query = {
+      category:addCategoryRef.current?.value,
+      list:[]
+    }
+    const dbMenuListDupli = menuList.some((menu:any)=> menu.category === query.category)
+    const treeDuplit = childAddMenuList.some((menu:any) => menu.category === query.category)
+    if(dbMenuListDupli){
+      return;
+    }else{
+      if(treeDuplit){
+        
+      }else{
+        // setChildAddMenuList([...childAddMenuList,query])
+        setMenuList([...menuList,query])
+      }
+    }
+    setAddCategoryNode(false)
   }
   function tempClick(){
-    postDB.menulist('isgame',childAddMenuList)
+    console.log('보내는 쿼리',childAddMenuList)
+    // postDB.menulist('isgame',childAddMenuList)
   }
 
   useEffect(()=>{
-    console.log("메뉴리스트입니다1.",childAddMenuList)
-  },[childAddMenuList])
+    console.log("자손 메뉴리스트.",childAddMenuList)
+    console.log("DB 메뉴 리스트",menuList)
+  },[childAddMenuList,menuList])
   function treeRender(){
     const result = [];
     if(menuList){
       for(const category in menuList!){
-        result.push(<MenuTree menuData={menuList[category]} setMenuList={childSetMenuList}></MenuTree>)
+        result.push(<MenuTree menuData={menuList[category]} setMenuList={treeSetMenuList}></MenuTree>)
       }
     }
 
@@ -113,8 +121,21 @@ const AdminMenuSetting = () => {
           <div className='tree'>
             <ul>
               {menuList && menuList?.map((data:any,index:number)=>{
-                return <MenuTree key={data.category} menuData={data} setMenuList={childSetMenuList}/>
+                return <MenuTree key={data.category} menuData={data} setTreeAddList={treeSetMenuList}/>
               })}
+              <li className='tree-child'>
+                <div className='node'>
+                  <div className='tree-add-node category'>
+                    {addCategoryNode ? (
+                    <label>
+                      <span className='input-wrap'><input type='text' ref={addCategoryRef}/><span onClick={() => setAddCategoryNode(false)}>X</span></span>
+                      <button className='node-addBtn' onClick={treeSetCategory}>추가</button>
+                    </label>)
+                    : <span className='category-add' onClick={() => setAddCategoryNode(true)}>+ 카테고리 추가하기</span>}
+                  </div>
+                  
+                </div>
+              </li>
               {/* {treeRender()} */}
             </ul>
           </div>
