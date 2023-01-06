@@ -9,7 +9,7 @@ type List = {
 }
 const AdminMenuSetting = () => {
   const [menuList,setMenuList] = useState<any>();
-  const [childAddMenuList,setChildAddMenuList] = useState<any>([]);
+  const [childProcessList,setChildProcessList] = useState<any>([]);
   const addCategoryRef = useRef<HTMLInputElement>(null);
   const [addCategoryNode,setAddCategoryNode] = useState(false);
   const list:List[] = [
@@ -56,61 +56,41 @@ const AdminMenuSetting = () => {
   },[])
 
   function treeSetMenuList(data:any){
-    const duplication = childAddMenuList.some((obj:any) => obj.category === data.category);
-    if(duplication){
-      const duplicateArrIndex = childAddMenuList.findIndex((obj:any)=> obj.category === data.category)
-      const newChildAddMenuList = childAddMenuList.map((obj:any,mapIndex:number)=>{
-        const {category,list,index} = obj;
-        const arrList = Object.assign([],list);
-        if(mapIndex === duplicateArrIndex){
-          return {category,list:[...arrList,String(data.list)],index}
-        }else{
-          return obj;
-        }
-      })
-      setChildAddMenuList(newChildAddMenuList);
-    }else{
-      setChildAddMenuList([...childAddMenuList,data])
-    }
+    const {category,list,index} = data;
+    const copyMenuList = Object.assign([],menuList)
+    copyMenuList[index] = { category, list:list };
+    setMenuList(copyMenuList);
   }
+
   function treeSetCategory(){
     const query = {
       category:addCategoryRef.current?.value,
       list:[]
     }
     const dbMenuListDupli = menuList.some((menu:any)=> menu.category === query.category)
-    const treeDuplit = childAddMenuList.some((menu:any) => menu.category === query.category)
+    // const treeDuplit = childAddMenuList.some((menu:any) => menu.category === query.category)
     if(dbMenuListDupli){
       return;
     }else{
-      if(treeDuplit){
+      // if(treeDuplit){
         
-      }else{
-        // setChildAddMenuList([...childAddMenuList,query])
-        setMenuList([...menuList,query])
-      }
+      // }else{
+      //   // setChildAddMenuList([...childAddMenuList,query]) // 카테고리 두개 추가돼고 index 추가가 됨 수정하기
+      //   setMenuList([...menuList,query])
+      // }
     }
     setAddCategoryNode(false)
   }
   function tempClick(){
-    console.log('보내는 쿼리',childAddMenuList)
+    // console.log('보내는 쿼리',childAddMenuList)
     // postDB.menulist('isgame',childAddMenuList)
   }
 
   useEffect(()=>{
-    console.log("자손 메뉴리스트.",childAddMenuList)
+    // console.log("자손 메뉴리스트.",childAddMenuList)
     console.log("DB 메뉴 리스트",menuList)
-  },[childAddMenuList,menuList])
-  function treeRender(){
-    const result = [];
-    if(menuList){
-      for(const category in menuList!){
-        result.push(<MenuTree menuData={menuList[category]} setMenuList={treeSetMenuList}></MenuTree>)
-      }
-    }
+  },[menuList])
 
-    return result
-  }
   return (
     <div className='admin-wrap'>
       <div className='category-area'>
@@ -121,7 +101,7 @@ const AdminMenuSetting = () => {
           <div className='tree'>
             <ul>
               {menuList && menuList?.map((data:any,index:number)=>{
-                return <MenuTree key={data.category} menuData={data} setTreeAddList={treeSetMenuList}/>
+                return <MenuTree key={data.category} menuData={data} index={index} setTreeAddList={treeSetMenuList}/>
               })}
               <li className='tree-child'>
                 <div className='node'>

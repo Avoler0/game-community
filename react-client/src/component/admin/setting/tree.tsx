@@ -1,32 +1,25 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 
 
-const MenuTree = ({menuData,setTreeAddList}:any) => {
+const MenuTree = ({menuData,setTreeAddList,index}:any) => {
   const {category,list} = menuData;
   const [addNode,setAddNode] = useState(false);
   const addMenuRef = useRef<HTMLInputElement>(null);
-  // console.log("메뉴트리",menuData,index)
-  function menuEdit(event:any){
-
-  }
 
   function childClick(event:any){
     event.currentTarget.classList.toggle('active');
   }
 
-  function menuAdd(event:any){
-    event.preventDefault()
-    const lustDupliCheck = list.includes(addMenuRef.current?.value);
-    if(addMenuRef){
-      if(lustDupliCheck){
-        setAddNode(false)
-      }else{
-        const value = addMenuRef.current?.value
-        list.push(value)
-        setTreeAddList({category,list:[value]})
-        setAddNode(false)
-      }
+  function addMenuList(){
+    const value = addMenuRef.current?.value;
+    const menuListDupliCheck = list.includes(addMenuRef.current?.value);
+
+    if(menuListDupliCheck){
+      setAddNode(false);
+    }else{
+      setTreeAddList({category,list:[...list,value],index})
+      setAddNode(false);
     }
   }
   return(
@@ -53,7 +46,7 @@ const MenuTree = ({menuData,setTreeAddList}:any) => {
             {addNode ? (
               <label>
                 <span className='input-wrap'><input type='text' ref={addMenuRef}/><span onClick={() => setAddNode(false)}>X</span></span>
-                <button className='node-addBtn' onClick={menuAdd}>추가</button>
+                <button className='node-addBtn' onClick={addMenuList}>추가</button>
               </label>)
                 : <span onClick={()=> setAddNode(true)}>+ 메뉴 추가하기</span>}
           </div>
