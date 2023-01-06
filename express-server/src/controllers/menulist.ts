@@ -1,5 +1,6 @@
+import { insertQuery, selectQuery } from './../mariadb/query';
 import db from '../mariadb/mariadb';
-import { getMariaDBCommunity } from '../mariadb/query';
+import { takeAddMenuList, } from '../service/addMenuList';
 
 
 export const getMenulist = async (req:any,res:any) => {
@@ -56,42 +57,15 @@ export const getMenulist = async (req:any,res:any) => {
 }
 
 export const postMenulist = async (req:any,res:any) => {
-  const conn = await db();
-  const {commuName} = req.params;
-  const communityID = await getMariaDBCommunity.id(commuName);
-  // console.log("포스트 받음",req.params,req.body)
-  console.log("포스트 받음",communityID)
-  // const { category, list } = req.body
   const body = req.body
-  body.forEach(async (element:any) => {
-    try{
-      let insertValue = '';
-      const query = `SELECT MenuCategoryID, MenuCategoryName FROM menucategory WHERE CommunityID = ${communityID} and MenuCategoryName = '${element.category}';`
-      const menucategoryQuery = await conn?.query(query);
-      const categoryID = menucategoryQuery[0]['MenuCategoryID']
-      
-      element.list.forEach(async (name:string,index:number)=>{
-        if(index === element.list.length - 1) insertValue += `(${communityID},${categoryID},'${name}')`
-        else insertValue += `(${communityID},${categoryID},'${name}'),`
+  const { commuName } = req.params;
+  const communityID = await selectQuery.community.id(commuName);
+  const result = await takeAddMenuList(body,communityID);
 
-        // await conn?.query(`INSERT INTO menulist(CommunityID,MenuCategoryID,MenuName) VALUES(${communityID},${categoryID},'${name}');`)
-      })
-
-      console.log(`INSERT INTO menulist(CommunityID,MenuCategoryID,MenuName) VALUES${insertValue}`)
-      const insertResult = await conn?.query(`INSERT INTO menulist(CommunityID,MenuCategoryID,MenuName) VALUES${insertValue};`)
-
-    }catch(err){
-      console.log('에러났음')
-    }
-
-  });
-  try{
-    const result = await conn?.query(`SELECT * FROM menucategory c LEFT JOIN menulist m ON c.MenuCategoryID = m.MenuCategoryID`)
-    // console.log("리설트",result)
-    return res.status(200).json(result)
-  }catch(err){
-    // console.log("에러남",err)
-    return res.status(400).json(err)
+  if(result){
+    res.status(200).json({message:'메뉴 추가에 성공하였습니다.'})
+  }else{
+    res.status(400).json({message:'api 조회에 실패하였습니다.'})
   }
   
 }
