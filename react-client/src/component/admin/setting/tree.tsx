@@ -1,8 +1,9 @@
+import e from "express";
 import { useEffect, useRef, useState } from "react";
 
 
 
-const MenuTree = ({menuData,setTreeAddList,index}:any) => {
+const MenuTree = ({menuData,treeSetMenuList,index}:any) => {
   const {category,list} = menuData;
   const [renderList,setLenderList] = useState(list);
   const [addNode,setAddNode] = useState(false);
@@ -12,24 +13,24 @@ const MenuTree = ({menuData,setTreeAddList,index}:any) => {
     event.currentTarget.classList.toggle('active');
   }
   function deleteMenuList(event:any){
-    const value = event.target.parentElement.children[1].textContent;
+    const value:string = event.target.parentElement.children[1].textContent;
     const copyRenderList = Object.assign([],renderList)
     const deleteIndex = copyRenderList.findIndex((name:string)=> name === value)
+    const beforeDataCheck = list.includes(value);
+    console.log("코피 파인드 인덱스",beforeDataCheck)
     copyRenderList.splice(deleteIndex,1)
     setLenderList(copyRenderList)
-    if(list.includes(value)) {
-      setTreeAddList({method:'DELETE',category,value})
-    }
+    treeSetMenuList({method:'DELETE',category,value,type: beforeDataCheck ? 'BEFORE' : 'AFTER'})
   }
 
   function addMenuList(){
     const value = addMenuRef.current?.value;
-    const menuListDupliCheck = renderList.includes(addMenuRef.current?.value);
-    if(menuListDupliCheck){
+    const renderListDupliCheck = renderList.includes(addMenuRef.current?.value);
+    if(renderListDupliCheck){
       setAddNode(false);
     }else{
       setLenderList([...renderList,value])
-      setTreeAddList({method:'ADD',category,value})
+      treeSetMenuList({method:'ADD',category,value})
       setAddNode(false);
     }
   }

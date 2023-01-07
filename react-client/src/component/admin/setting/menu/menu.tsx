@@ -9,8 +9,9 @@ type List = {
 }
 const AdminMenuSetting = () => {
   const [menuList,setMenuList] = useState<any>();
+  const taksList:any = [];
   const addCategoryRef = useRef<HTMLInputElement>(null);
-  const [treeProcessList,setProcessList] = useState<any>([]);
+  const [treeTaskList,setTreeTaskList] = useState<any>([]);
   const [addCategoryNode,setAddCategoryNode] = useState(false);
   const list:List[] = [
     {
@@ -48,6 +49,7 @@ const AdminMenuSetting = () => {
       }
       return accumulator
     },[])
+
     for(const ee in dataSort){
       result.push({category:ee,list:dataSort[ee]});
     }
@@ -56,8 +58,19 @@ const AdminMenuSetting = () => {
   },[])
 
   function treeSetMenuList(data:any){
+    const {method,category,value} = data;
     console.log('받아온 트리 데이터',data)
-    setProcessList([...treeProcessList,data])
+    const dupliIndex = taksList.findIndex((t:any) => t.category === category && t.value === value);
+    if(dupliIndex >= 0){
+      taksList.splice(dupliIndex,1);
+    }
+    
+    if(method === 'DELETE' && data.type === 'AFTER'){
+      return
+    }else{
+      taksList.push(data);
+    }
+    
   }
 
   function treeSetCategory(){
@@ -67,13 +80,14 @@ const AdminMenuSetting = () => {
     setAddCategoryNode(false)
   }
   function postDBProcessList(){
-    postDB.menulist('isgame',treeProcessList)
+    console.log("보내는 쿼리",taksList)
+    // postDB.menulist('isgame',treeTaskList)
   }
 
   useEffect(()=>{
     // console.log("자손 메뉴리스트.",childAddMenuList)
-    console.log("처리 할 리스트 목록",treeProcessList)
-  },[treeProcessList])
+    console.log("처리 할 리스트 목록",treeTaskList)
+  },[treeTaskList])
 
   return (
     <div className='admin-wrap'>
@@ -85,7 +99,7 @@ const AdminMenuSetting = () => {
           <div className='tree'>
             <ul>
               {menuList && menuList?.map((data:any,index:number)=>{
-                return <MenuTree key={data.category} menuData={data} index={index} setTreeAddList={treeSetMenuList}/>
+                return <MenuTree key={data.category} menuData={data} index={index} treeSetMenuList={treeSetMenuList}/>
               })}
               <li className='tree-child'>
                 <div className='node'>
