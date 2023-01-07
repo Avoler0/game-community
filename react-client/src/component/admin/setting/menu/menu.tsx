@@ -9,8 +9,8 @@ type List = {
 }
 const AdminMenuSetting = () => {
   const [menuList,setMenuList] = useState<any>();
-  const [childProcessList,setChildProcessList] = useState<any>([]);
   const addCategoryRef = useRef<HTMLInputElement>(null);
+  const [treeProcessList,setProcessList] = useState<any>([]);
   const [addCategoryNode,setAddCategoryNode] = useState(false);
   const list:List[] = [
     {
@@ -56,47 +56,31 @@ const AdminMenuSetting = () => {
   },[])
 
   function treeSetMenuList(data:any){
-    const {category,list,index} = data;
-    const copyMenuList = Object.assign([],menuList)
-    copyMenuList[index] = { category, list:list };
-    setMenuList(copyMenuList);
+    console.log('받아온 트리 데이터',data)
+    setProcessList([...treeProcessList,data])
   }
 
   function treeSetCategory(){
-    const query = {
-      category:addCategoryRef.current?.value,
-      list:[]
-    }
-    const dbMenuListDupli = menuList.some((menu:any)=> menu.category === query.category)
-    // const treeDuplit = childAddMenuList.some((menu:any) => menu.category === query.category)
-    if(dbMenuListDupli){
-      return;
-    }else{
-      // if(treeDuplit){
-        
-      // }else{
-      //   // setChildAddMenuList([...childAddMenuList,query]) // 카테고리 두개 추가돼고 index 추가가 됨 수정하기
-      //   setMenuList([...menuList,query])
-      // }
-    }
+    const categoryName = addCategoryRef.current?.value;
+    const dbMenuListDupli = menuList.some((menu:any)=> menu.category === categoryName)
+    if(!dbMenuListDupli) setMenuList([...menuList,{category:categoryName,list:[]}])
     setAddCategoryNode(false)
   }
-  function tempClick(){
-    // console.log('보내는 쿼리',childAddMenuList)
-    // postDB.menulist('isgame',childAddMenuList)
+  function postDBProcessList(){
+    postDB.menulist('isgame',treeProcessList)
   }
 
   useEffect(()=>{
     // console.log("자손 메뉴리스트.",childAddMenuList)
-    console.log("DB 메뉴 리스트",menuList)
-  },[menuList])
+    console.log("처리 할 리스트 목록",treeProcessList)
+  },[treeProcessList])
 
   return (
     <div className='admin-wrap'>
       <div className='category-area'>
         <div className='admin-category-heading'>카테고리 목록</div>
-        <button onClick={tempClick}>저장</button>
-        <button>삭제</button>
+        <button onClick={postDBProcessList}>저장</button>
+        <button>취소</button>
         <div className='category-list'>
           <div className='tree'>
             <ul>

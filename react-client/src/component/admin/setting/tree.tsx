@@ -4,24 +4,36 @@ import { useEffect, useRef, useState } from "react";
 
 const MenuTree = ({menuData,setTreeAddList,index}:any) => {
   const {category,list} = menuData;
+  const [renderList,setLenderList] = useState(list);
   const [addNode,setAddNode] = useState(false);
   const addMenuRef = useRef<HTMLInputElement>(null);
 
   function childClick(event:any){
     event.currentTarget.classList.toggle('active');
   }
+  function deleteMenuList(event:any){
+    const value = event.target.parentElement.children[1].textContent;
+    const copyRenderList = Object.assign([],renderList)
+    const deleteIndex = copyRenderList.findIndex((name:string)=> name === value)
+    copyRenderList.splice(deleteIndex,1)
+    setLenderList(copyRenderList)
+    if(list.includes(value)) {
+      setTreeAddList({method:'DELETE',category,value})
+    }
+  }
 
   function addMenuList(){
     const value = addMenuRef.current?.value;
-    const menuListDupliCheck = list.includes(addMenuRef.current?.value);
-
+    const menuListDupliCheck = renderList.includes(addMenuRef.current?.value);
     if(menuListDupliCheck){
       setAddNode(false);
     }else{
-      setTreeAddList({category,list:[...list,value],index})
+      setLenderList([...renderList,value])
+      setTreeAddList({method:'ADD',category,value})
       setAddNode(false);
     }
   }
+
   return(
     <>
       <li className='tree-category'>
@@ -29,14 +41,15 @@ const MenuTree = ({menuData,setTreeAddList,index}:any) => {
           <span>{category}</span>
         </div>
       </li>
-      {list.map((name:string)=>(
+      {renderList.map((name:string)=>(
         <li key={category+' '+name} className='tree-child' onClick={childClick}>
           <div className='node'>
             <span>ㄴ </span>
-            <span>{name}</span>
+            <span className="menu-value">{name}</span>
             <span className='image-wrap'>
               <img src='/images/pencil.svg' alt='edit'/>
             </span>
+            <span onClick={deleteMenuList}>X</span>
           </div>
         </li>
       ))}
