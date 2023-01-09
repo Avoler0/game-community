@@ -17,11 +17,25 @@ export const selectQuery = {
       return readTable[0]['CommunityName'];
     },
   },
-  menulist:{
-    all:async function getMenulistAll(commuName:string) {
+  menucategory:{
+    id:async function getCategoryID(communityID:number,categoryName:string) {
       const conn = await db();
-      const communityID = selectQuery.community.id(commuName)
-      const result = await conn?.query(`SELECT * FROM menulist WHERE CommunityID = ${communityID}`)
+      const query = `SELECT MenuCategoryID FROM menucategory WHERE CommunityID = ${communityID} and MenuCategoryName = '${categoryName}';`
+      const menucategoryQuery = await conn?.query(query);
+      return menucategoryQuery[0]['MenuCategoryID']
+    }
+  },
+  menulist:{
+    commuNameAll:async function getMenulistAll(commuName:string) {
+      const conn = await db();
+      const communityID = await selectQuery.community.id(commuName)
+      const result = await conn?.query(`SELECT * FROM menulist WHERE CommunityID = ${communityID};`)
+
+      return result;
+    },
+    commuIdAll:async function getMenulistAll(communityID:number) {
+      const conn = await db();
+      const result = await conn?.query(`SELECT * FROM menulist WHERE CommunityID = ${communityID};`)
 
       return result;
     }
@@ -35,11 +49,19 @@ export const insertQuery = {
     
     return result;
   },
-  menulist:async function (values:any){
+  menulist:async function (values:string){
     const conn = await db();
-    
     const result = await conn?.query(`INSERT INTO menulist(CommunityID,MenuCategoryID,MenuName) VALUES${values};`)
-    console.log("쿼리 리설트",values,result)
+    console.log("인서트 리설트",values,result)
     return result;
   },
+}
+
+export const deleteQuery = {
+  menulist:async function(communityID:number,categoryID:number,values:string) {
+    const conn = await db();
+    const result = await conn?.query(`DELETE FROM menulist WHERE CommunityID = ${communityID} AND MenuCategoryID = ${categoryID}  AND MenuName IN (${values})`)
+    console.log("딜리트 리설트",values,result)
+    return result
+  }
 }
