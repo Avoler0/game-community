@@ -16,21 +16,22 @@ const MenuTree = ({menuData,treeSetMenuList,index}:any) => {
     const value:string = event.target.parentElement.children[1].textContent;
     const copyRenderList = Object.assign([],renderList)
     const deleteIndex = copyRenderList.findIndex((name:string)=> name === value)
-    const beforeDataCheck = list.includes(value);
-    console.log("코피 파인드 인덱스",beforeDataCheck)
+    const oldCheck = list.includes(value);
+
     copyRenderList.splice(deleteIndex,1)
     setLenderList(copyRenderList)
-    treeSetMenuList({method:'DELETE',category,value,type: beforeDataCheck ? 'BEFORE' : 'AFTER'})
+    treeSetMenuList({method:'DELETE',category,value,type: oldCheck ? 'old' : 'new'})
   }
 
   function addMenuList(){
     const value = addMenuRef.current?.value;
-    const renderListDupliCheck = renderList.includes(addMenuRef.current?.value);
+    const oldCheck = list.includes(value)
+    const renderListDupliCheck = renderList.includes(value);
     if(renderListDupliCheck){
       setAddNode(false);
     }else{
       setLenderList([...renderList,value])
-      treeSetMenuList({method:'ADD',category,value})
+      treeSetMenuList({method:'ADD',category,value,type: oldCheck ? 'old' : 'new'})
       setAddNode(false);
     }
   }

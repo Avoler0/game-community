@@ -58,18 +58,11 @@ const AdminMenuSetting = () => {
   },[])
 
   function treeSetMenuList(data:any){
-    const {method,category,value} = data;
+    const {category,value} = data;
     console.log('받아온 트리 데이터',data)
     const dupliIndex = taksList.findIndex((t:any) => t.category === category && t.value === value);
-    if(dupliIndex >= 0){
-      taksList.splice(dupliIndex,1);
-    }
-    
-    if(method === 'DELETE' && data.type === 'AFTER'){
-      return
-    }else{
-      taksList.push(data);
-    }
+    if(dupliIndex >= 0) taksList.splice(dupliIndex,1);
+    if(data.type !== 'old') taksList.push(data);
     
   }
 
