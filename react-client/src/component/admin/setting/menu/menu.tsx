@@ -58,12 +58,22 @@ const AdminMenuSetting = () => {
   },[])
 
   function treeSetMenuList(data:any){
-    const {category,value} = data;
-    console.log('받아온 트리 데이터',data)
-    const dupliIndex = taksList.findIndex((t:any) => t.category === category && t.value === value);
-    if(dupliIndex >= 0) taksList.splice(dupliIndex,1);
-    if(data.type !== 'old') taksList.push(data);
+    const {category,value,method} = data;
+    console.log('받아온 트리 데이터',menuList,data)
+    const oldDupliCheck = menuList.some((element:any) => {
+      return element.list.includes(value)
+    });
+    console.log(oldDupliCheck)
+    const taskListDupliIndex = taksList.findIndex((t:any) => t.category === category && t.value === value);
     
+    if(taskListDupliIndex >= 0){
+      taksList.splice(taskListDupliIndex,1);
+    }else if(data.type !== 'old'){
+      taksList.push(data);
+    }else if(method === 'DELETE' && oldDupliCheck){
+      taksList.push(data);
+    }
+    console.log(taksList)
   }
 
   function treeSetCategory(){
@@ -74,7 +84,7 @@ const AdminMenuSetting = () => {
   }
   function postDBProcessList(){
     console.log("보내는 쿼리",taksList)
-    // postDB.menulist('isgame',treeTaskList)
+    // postDB.menulist('isgame',taksList)
   }
 
   useEffect(()=>{
